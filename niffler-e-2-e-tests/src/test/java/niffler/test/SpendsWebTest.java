@@ -29,7 +29,7 @@ public class SpendsWebTest extends BaseWebTest {
         description = "QA GURU ADVANCED VOL 2",
         currency = CurrencyValues.RUB,
         amount = 52000.00,
-        category = "Обучение"
+        category = "обучение"
     )
     @AllureId("101")
     @Test
@@ -46,6 +46,5 @@ public class SpendsWebTest extends BaseWebTest {
         $(".spendings-table tbody")
             .$$("tr")
             .shouldHave(CollectionCondition.size(0));
-        throw new IllegalStateException();
     }
 }
