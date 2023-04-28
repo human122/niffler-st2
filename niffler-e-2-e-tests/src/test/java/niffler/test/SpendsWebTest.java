@@ -7,6 +7,7 @@ import static com.codeborne.selenide.Selenide.$$;
 import com.codeborne.selenide.CollectionCondition;
 import com.codeborne.selenide.Selenide;
 import io.qameta.allure.AllureId;
+import niffler.jupiter.annotation.GenerateCategory;
 import niffler.jupiter.annotation.GenerateSpend;
 import niffler.model.CurrencyValues;
 import niffler.model.SpendJson;
@@ -24,6 +25,10 @@ public class SpendsWebTest extends BaseWebTest {
         $("button[type='submit']").click();
     }
 
+    @GenerateCategory(
+            username = "anton",
+            category = "обучение"
+    )
     @GenerateSpend(
         username = "anton",
         description = "QA GURU ADVANCED VOL 2",
@@ -33,7 +38,7 @@ public class SpendsWebTest extends BaseWebTest {
     )
     @AllureId("101")
     @Test
-    void spendShouldBeDeletedByActionInTable(SpendJson spend) {
+    public void spendShouldBeDeletedByActionInTable(SpendJson spend) {
         $(".spendings-table tbody").$$("tr")
             .find(text(spend.getDescription()))
             .$$("td").first()
@@ -46,6 +51,5 @@ public class SpendsWebTest extends BaseWebTest {
         $(".spendings-table tbody")
             .$$("tr")
             .shouldHave(CollectionCondition.size(0));
-        throw new IllegalStateException();
     }
 }
