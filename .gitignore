@@ -39,3 +39,11 @@ out/
 
 ### gRPC generated files ###
 /niffler-grpc-common/src/generated/**
+/build/
+/niffler-auth/build/
+/niffler-currency/build/
+/niffler-e-2-e-tests/build/
+/niffler-gateway/build/
+/niffler-grpc-common/build/
+/niffler-spend/build/
+/niffler-userdata/build/

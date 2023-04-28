@@ -11,27 +11,25 @@ import niffler.jupiter.annotation.GenerateSpend;
 import niffler.model.CurrencyValues;
 import niffler.model.SpendJson;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
-@Disabled
 public class SpendsWebTest extends BaseWebTest {
 
     @BeforeEach
     void doLogin() {
         Selenide.open("http://127.0.0.1:3000/main");
         $("a[href*='redirect']").click();
-        $("input[name='username']").setValue("dima");
-        $("input[name='password']").setValue("12345");
+        $("input[name='username']").setValue("anton");
+        $("input[name='password']").setValue("123");
         $("button[type='submit']").click();
     }
 
     @GenerateSpend(
-        username = "dima",
+        username = "anton",
         description = "QA GURU ADVANCED VOL 2",
         currency = CurrencyValues.RUB,
         amount = 52000.00,
-        category = "Обучение"
+        category = "обучение"
     )
     @AllureId("101")
     @Test

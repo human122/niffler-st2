@@ -16,8 +16,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 public class LoginTest extends BaseWebTest {
   
   @ValueSource(strings = {
-      "testdata/dima.json",
-      "testdata/emma.json"
+      "testdata/anton.json"
   })
   @AllureId("104")
   @ParameterizedTest
