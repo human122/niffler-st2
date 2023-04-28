@@ -1,3 +1,7 @@
+username: anton
+password: 123
+
+
 ## **Технологии, использованные в Niffler**
 
 - [Spring Authorization Server](https://spring.io/projects/spring-authorization-server)
