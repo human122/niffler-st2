@@ -46,4 +46,18 @@ public class FriendsWebTest extends BaseWebTest {
         .should(Condition.visible);
   }
 
+  @AllureId("103")
+  @Test
+  void friendsShouldBeVisible2(@User(userType = INVITATION_SENT) UserJson user) {
+    Allure.step("open page", () -> Selenide.open("http://127.0.0.1:3000/main"));
+    $("a[href*='redirect']").click();
+    $("input[name='username']").setValue(user.getUsername());
+    $("input[name='password']").setValue(user.getPassword());
+    $("button[type='submit']").click();
+
+    $("a[href*='people']").click();
+    $$(".table tbody tr").find(Condition.text("Pending invitation"))
+        .should(Condition.visible);
+  }
+
 }

@@ -1,22 +1,24 @@
 package niffler.test;
 
-import static com.codeborne.selenide.Condition.text;
-import static com.codeborne.selenide.Condition.visible;
-import static com.codeborne.selenide.Selenide.$;
-
 import com.codeborne.selenide.Selenide;
 import io.qameta.allure.Allure;
 import io.qameta.allure.AllureId;
-import java.io.IOException;
 import niffler.jupiter.annotation.ClasspathUser;
 import niffler.model.UserJson;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
+import java.io.IOException;
+
+import static com.codeborne.selenide.Condition.text;
+import static com.codeborne.selenide.Condition.visible;
+import static com.codeborne.selenide.Selenide.$;
+
 public class LoginTest extends BaseWebTest {
   
   @ValueSource(strings = {
-      "testdata/anton.json"
+      "testdata/anton.json",
+      "testdata/emma.json"
   })
   @AllureId("104")
   @ParameterizedTest

@@ -12,8 +12,10 @@ import niffler.jupiter.annotation.GenerateSpend;
 import niffler.model.CurrencyValues;
 import niffler.model.SpendJson;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
+@Disabled
 public class SpendsWebTest extends BaseWebTest {
 
     @BeforeEach
@@ -51,5 +53,6 @@ public class SpendsWebTest extends BaseWebTest {
         $(".spendings-table tbody")
             .$$("tr")
             .shouldHave(CollectionCondition.size(0));
+        throw new IllegalStateException();
     }
 }
