@@ -31,9 +31,9 @@ public class UserDataUpdateTest {
                 .build();
 
         UserDataService userService = retrofit.create(UserDataService.class);
-        UserJson originalUser = userService.currentUser(user.getUsername()).execute().body();
-        UserJson changedUser = userService.updateUserInfo(user).execute().body();
-        Assertions.assertNotEquals(originalUser.getSurname(), changedUser.getSurname());
-        Assertions.assertNotEquals(originalUser.getCurrency(), changedUser.getCurrency());
+        userService.updateUserInfo(user).execute();
+        UserJson upd = userService.currentUser(user.getUsername()).execute().body();
+        Assertions.assertEquals(upd.getSurname(), user.getSurname());
+        Assertions.assertEquals(upd.getCurrency(), user.getCurrency());
     }
 }
