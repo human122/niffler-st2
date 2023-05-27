@@ -14,7 +14,6 @@ import java.util.UUID;
 public class NifflerUsersDAOJdbc implements NifflerUsersDAO {
 
     private static final DataSource ds = DataSourceProvider.INSTANCE.getDataSource(ServiceDB.NIFFLER_AUTH);
-    private static final PasswordEncoder pe = PasswordEncoderFactories.createDelegatingPasswordEncoder();
 
     @Override
     public int createUser(UserEntity user) {
@@ -35,17 +34,19 @@ public class NifflerUsersDAOJdbc implements NifflerUsersDAO {
                 stUser.setBoolean(5, user.getAccountNonLocked());
                 stUser.setBoolean(6, user.getCredentialsNonExpired());
                 executeUpdate = stUser.executeUpdate();
-                final UUID userId;
+                final UUID finalUserId;
                 try (ResultSet resultSet = stUser.getGeneratedKeys()) {
-                    if (resultSet.next())
-                        userId = UUID.fromString(resultSet.getString(1));
-                    else
-                        throw new SQLException("User not fined");
+                    if (resultSet.next()) {
+                        finalUserId = UUID.fromString(resultSet.getString(1));
+                        user.setId(finalUserId);
+                    } else {
+                    throw new SQLException("User not found");
+                    }
                 }
 
-                for (AuthorityEntity autority : user.getAuthorities()) {
-                    stAutorities.setObject(1, userId);
-                    stAutorities.setString(2, autority.getAuthority().name());
+                for (AuthorityEntity authority : user.getAuthorities()) {
+                    stAutorities.setObject(1, finalUserId);
+                    stAutorities.setString(2, authority.getAuthority().name());
                     stAutorities.addBatch();
                     stAutorities.clearParameters();
                 }
@@ -111,18 +112,18 @@ public class NifflerUsersDAOJdbc implements NifflerUsersDAO {
     }
 
     @Override
-    public int deleteUser(String userId) {
+    public int deleteUser(UserEntity user) {
         int executeDelete;
         try (Connection conn = ds.getConnection();
              PreparedStatement st = conn.prepareStatement("DELETE from authorities a where a.user_id = ?::uuid")) {
-            st.setString(1, userId);
+            st.setObject(1, user.getId());
             st.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
         try (Connection conn = ds.getConnection();
              PreparedStatement st = conn.prepareStatement("DELETE from users u where u.id = ?::uuid")) {
-            st.setString(1, userId);
+            st.setObject(1, user.getId());
             executeDelete = st.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
