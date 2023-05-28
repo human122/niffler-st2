@@ -11,7 +11,7 @@ import org.junit.jupiter.api.extension.*;
 import java.util.Arrays;
 import java.util.Locale;
 
-public class GenerateUserExtension implements ParameterResolver, BeforeEachCallback {
+public class GenerateUserExtension implements ParameterResolver, BeforeEachCallback, AfterEachCallback {
 
     public static ExtensionContext.Namespace NAMESPACE = ExtensionContext.Namespace
             .create(GenerateUserExtension.class);
@@ -23,7 +23,7 @@ public class GenerateUserExtension implements ParameterResolver, BeforeEachCallb
     public void beforeEach(ExtensionContext context) {
         UserEntity ue = new UserEntity();
         ue.setUsername(nameGen.name().username());
-        ue.setPassword("123456");
+        ue.setPassword("12345");
         ue.setEnabled(true);
         ue.setAccountNonExpired(true);
         ue.setAccountNonLocked(true);
@@ -36,7 +36,12 @@ public class GenerateUserExtension implements ParameterResolver, BeforeEachCallb
                 }
         ).toList());
         usersDAO.createUser(ue);
-        context.getStore(NAMESPACE).put("user", ue);
+        context.getStore(NAMESPACE).put("CreatedUser", ue);
+    }
+
+    @Override
+    public void afterEach(ExtensionContext context) throws Exception {
+        usersDAO.deleteUser(context.getStore(NAMESPACE).get("CreatedUser", UserEntity.class));
     }
 
     @Override
@@ -48,6 +53,6 @@ public class GenerateUserExtension implements ParameterResolver, BeforeEachCallb
     @Override
     public UserEntity resolveParameter(ParameterContext parameterContext,
                                        ExtensionContext extensionContext) throws ParameterResolutionException {
-        return extensionContext.getStore(NAMESPACE).get("user", UserEntity.class);
+        return extensionContext.getStore(NAMESPACE).get("CreatedUser", UserEntity.class);
     }
 }
