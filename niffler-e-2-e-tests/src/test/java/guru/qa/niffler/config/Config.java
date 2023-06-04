@@ -14,5 +14,11 @@ public interface Config {
 
     String getDBPassword();
 
+    String getSpendUrl();
+
     int getDBPort();
+
+    String getFrontUrl();
+
+    String getAuthUrl();
 }
