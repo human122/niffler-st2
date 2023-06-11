@@ -29,6 +29,7 @@ public class Header extends BaseComponent<Header> {
     }
 
     public MainPage goToMainPage() {
+        int d = 8;
         mainPageBtn.click();
         return new MainPage();
     }

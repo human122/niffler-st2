@@ -2,9 +2,12 @@ package guru.qa.niffler.test;
 
 import com.codeborne.selenide.Selenide;
 import guru.qa.niffler.jupiter.annotation.ClasspathUser;
+import guru.qa.niffler.page.LoginPage;
+import guru.qa.niffler.page.MainPage;
 import io.qameta.allure.Allure;
 import io.qameta.allure.AllureId;
 import guru.qa.niffler.model.UserJson;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
@@ -31,6 +34,26 @@ public class LoginTest extends BaseWebTest {
 
     $("a[href*='friends']").click();
     $(".header").should(visible).shouldHave(text("Niffler. The coin keeper."));
+  }
+
+  @Test
+  void errorMessageShouldBeVisibleInCaseThatCredentialsAreBad() {
+    Selenide.open(LoginPage.URL, LoginPage.class)
+            .goToLoginPage()
+            .checkThatPageLoaded()
+            .fillLoginPage("jndfjvjnkj", "1212")
+            .checkErrorMessage("Bad credentials");
+  }
+
+  @Test
+  void mainPageDisplayedAfterLogInWithValidCredentials() {
+    Selenide.open(LoginPage.URL, LoginPage.class)
+            .goToLoginPage()
+            .checkThatPageLoaded()
+            .fillLoginPage("anton", "123");
+
+    new MainPage()
+            .checkThatPageLoaded();
   }
 
 }

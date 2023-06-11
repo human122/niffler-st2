@@ -8,13 +8,13 @@ import static com.codeborne.selenide.Selenide.$;
 
 public class RegistrationPage extends BasePage<RegistrationPage> {
 
-    public static final String URL = Config.getConfig().getAuthUrl() + "/register";
+    public static final String URL = Config.getConfig().getAuthUrl() + "register";
 
     private final SelenideElement header = $(".form__paragraph");
     private final SelenideElement usernameInput = $("#username");
     private final SelenideElement passwordInput = $("#password");
-  private final SelenideElement passwordSubmitInput = $("#passwordSubmit");
-  private final SelenideElement signUpBtn = $("button[type='submit']");
+    private final SelenideElement passwordSubmitInput = $("#passwordSubmit");
+    private final SelenideElement signUpBtn = $("button[type='submit']");
 
     @Override
     public RegistrationPage checkThatPageLoaded() {
@@ -30,9 +30,9 @@ public class RegistrationPage extends BasePage<RegistrationPage> {
         return this;
   }
 
-        public RegistrationPage checkErrorMessage(String expectedMessage) {
-            $(".form__error").shouldHave(text(expectedMessage));
-            return this;
-        }
+    public RegistrationPage checkErrorMessage(String expectedMessage) {
+        $(".form__error").shouldHave(text(expectedMessage));
+        return this;
+    }
 
 }
