@@ -1,6 +1,5 @@
 package guru.qa.niffler.page.component;
 
-import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
 import guru.qa.niffler.page.BaseComponent;
 import guru.qa.niffler.page.FriendsPage;
@@ -20,7 +19,7 @@ public class Header extends BaseComponent<Header> {
     @Override
     public Header checkThatComponentDisplayed() {
         self.$(".header__title").shouldHave(text("Niffler. The coin keeper."));
-        return null;
+        return this;
     }
 
     public FriendsPage goToFriendsPage() {
@@ -29,7 +28,6 @@ public class Header extends BaseComponent<Header> {
     }
 
     public MainPage goToMainPage() {
-        int d = 8;
         mainPageBtn.click();
         return new MainPage();
     }

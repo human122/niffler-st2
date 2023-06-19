@@ -19,14 +19,14 @@ public class LoginPage extends BasePage<LoginPage> {
     private final SelenideElement signInBtn = $("button[type='submit']");
 
     public LoginPage goToLoginPage() {
-        loginLink.shouldBe(visible).click();
+        loginLink.click();
         return this;
     }
 
     @Override
     public LoginPage checkThatPageLoaded() {
-        usernameInput.should(Condition.exist);
-        passwordInput.should(Condition.exist);
+        usernameInput.should(visible);
+        passwordInput.should(visible);
         signInBtn.shouldHave(Condition.text("Sign In"));
         return this;
     }
